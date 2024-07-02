@@ -41,6 +41,9 @@ List<Cell> findShortestPath(GridGraph graph, Cell source, Cell destination) {
     shortestPath.add(parents[currentCell]!);
     currentCell = parents[currentCell]!;
   }
+  final result = shortestPath.reversed.toList();
+  print('\n\n\n');
+  print(result);
 
-  return shortestPath;
+  return result;
 }

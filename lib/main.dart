@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:webspark_test_task/blocs/app_bloc/app_bloc.dart';
 import 'package:webspark_test_task/screens/calculation_screen.dart';
 import 'package:webspark_test_task/screens/home_screen.dart';
 import 'package:webspark_test_task/screens/solutions_list_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,18 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-        useMaterial3: true,
-      ),
-      routes: {
-        '/': (context) => const HomeScreen(),
-        'calculation': (context) => const CalculationScreen(),
-        'solutions': (context) => const SolutionListScreen(),
-        'solution': (context) => const MyHomePage(title: 'Solution'),
-      },
+    return BlocProvider(
+        create: (context) => AppBloc(),
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+            useMaterial3: true,
+          ),
+          routes: {
+            '/': (context) => const HomeScreen(),
+            'calculation': (context) => const CalculationScreen(),
+            'solutions': (context) => const SolutionListScreen(),
+            'solution': (context) => const MyHomePage(title: 'Solution'),
+          },
+        ),
     );
   }
 }

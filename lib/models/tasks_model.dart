@@ -8,16 +8,14 @@ class CellModel {
 }
 
 
-
 class TaskModel {
   late String id;
-  late List<String> field;
+  late List<dynamic> field;
   late CellModel start;
   late CellModel end;
 
   TaskModel(this.id, this.field, this.start, this.end);
 }
-
 
 
 class TaskListModel {
