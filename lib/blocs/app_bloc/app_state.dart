@@ -17,11 +17,12 @@ final class AppInitial extends AppState {
   final ResultsModel results = ResultsModel();
   final bool homeButtonActive = true;
   final bool calcButtonActive = true;
+  final String currentId = '';
 
   AppInitial();
 
   @override
-  List<Object?> get props => [url, totalTasks, tasksDone, tasks, solutions, results, homeButtonActive, calcButtonActive];
+  List<Object?> get props => [url, totalTasks, tasksDone, tasks, solutions, results, homeButtonActive, calcButtonActive, currentId];
 }
 
 
@@ -34,6 +35,7 @@ final class AppLoaded extends AppState {
   final ResultsModel results;
   final bool homeButtonActive;
   final bool calcButtonActive;
+  final String currentId;
 
   const AppLoaded({
     required this.url,
@@ -44,8 +46,9 @@ final class AppLoaded extends AppState {
     required this.results,
     required this.homeButtonActive,
     required this.calcButtonActive,
+    required this.currentId,
   });
 
   @override
-  List<Object?> get props => [url, totalTasks, tasksDone, tasks, solutions, results, homeButtonActive, calcButtonActive];
+  List<Object?> get props => [url, totalTasks, tasksDone, tasks, solutions, results, homeButtonActive, calcButtonActive, currentId];
 }

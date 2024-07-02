@@ -67,3 +67,13 @@ class ToggleCalcButtonEvent extends AppEvent {
   List<Object?> get props => [active];
 
 }
+
+class SetCurrentSolutionIdEvent extends AppEvent {
+  final String id;
+
+  const SetCurrentSolutionIdEvent(this.id);
+
+  @override
+  List<Object?> get props => [id];
+
+}

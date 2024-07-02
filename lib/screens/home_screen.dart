@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:webspark_test_task/models/tasks_model.dart';
 import 'package:webspark_test_task/repositories/shortest_path_repository.dart';
 
 import '../blocs/app_bloc/app_bloc.dart';
 
-// https://flutter.webspark.dev/flutter/api
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

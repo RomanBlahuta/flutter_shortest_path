@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/app_bloc/app_bloc.dart';
 import '../repositories/shortest_path_repository.dart';
 import '../utils/data_structures.dart';
+import '../utils/utils.dart';
 
 class CalculationScreen extends StatelessWidget {
   const CalculationScreen({super.key});
@@ -151,27 +152,4 @@ class CalculationScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-List<Map<String, dynamic>> formResponseForPost(Map<String, List<Cell>> solutions) {
-  final List<Map<String, dynamic>> response = [];
-  for (final taskId in solutions.keys) {
-    String pathString = '';
-    solutions[taskId]?.forEach((solution) {
-      pathString += '(${solution.item1},${solution.item2})->';
-    });
-    pathString = pathString.substring(0, pathString.length-2);
-    print(pathString);
-
-    response.add({
-      'id': taskId,
-      'result': {
-        'steps': solutions[taskId]?.map((solution) => ({'x': solution.item1, 'y': solution.item2})).toList(),
-        'path': pathString,
-      },
-    });
-  }
-
-  print(response);
-  return response;
 }

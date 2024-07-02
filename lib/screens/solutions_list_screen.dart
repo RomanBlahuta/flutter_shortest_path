@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:webspark_test_task/blocs/app_bloc/app_bloc.dart';
+
+import '../utils/utils.dart';
 
 class SolutionListScreen extends StatelessWidget {
   const SolutionListScreen({super.key});
@@ -19,10 +23,13 @@ class SolutionListScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, 'solution'),
+        child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+          return ListView(
+            children: (state as AppLoaded).solutions.keys.map((id) => GestureDetector(
+              onTap: () {
+                context.read<AppBloc>().add(SetCurrentSolutionIdEvent(id));
+                Navigator.pushNamed(context, 'solution');
+              } ,
               child: Container(
                 decoration: const BoxDecoration(
                     border: Border(
@@ -34,72 +41,20 @@ class SolutionListScreen extends StatelessWidget {
                 ),
                 height: 72,
                 width: double.infinity,
-                child: const Center(
+                child: Center(
                     child: Text(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
-                        '(2,1) -> (1, 1) -> (0, 1)'
-                    )
+                        formSolutionPathString(id, state.solutions),
+                    ),
                 ),
               ),
-            ),
-
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, 'solution'),
-              child: Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.black12,
-                        )
-                    )
-                ),
-                height: 72,
-                width: double.infinity,
-                child: const Center(
-                    child: Text(
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        '(2,1) -> (1, 1) -> (0, 1)'
-                    )
-                ),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, 'solution'),
-              child: Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.black12,
-                        )
-                    )
-                ),
-                height: 72,
-                width: double.infinity,
-                child: const Center(
-                    child: Text(
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        '(2,1) -> (1, 1) -> (0, 1)'
-                    )
-                ),
-              ),
-            ),
-          ],
-        ),
+            )).toList(),
+          );
+        }),
       ),
     );
   }

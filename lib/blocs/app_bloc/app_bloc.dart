@@ -23,6 +23,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             results: prevState.results,
             homeButtonActive: prevState.homeButtonActive,
             calcButtonActive: prevState.calcButtonActive,
+            currentId: prevState.currentId,
         );
         emit(newState);
       }
@@ -37,6 +38,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             results: prevState.results,
             homeButtonActive: prevState.homeButtonActive,
             calcButtonActive: prevState.calcButtonActive,
+            currentId: prevState.currentId,
         );
         emit(newState);
       }
@@ -52,6 +54,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           results: prevState.results,
           homeButtonActive: true,
           calcButtonActive: prevState.calcButtonActive,
+          currentId: prevState.currentId,
       );
       emit(newState);
 
@@ -73,6 +76,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           results: prevState.results,
           homeButtonActive: prevState.homeButtonActive,
           calcButtonActive: prevState.calcButtonActive,
+          currentId: prevState.currentId,
       );
       emit(newState);
     });
@@ -87,6 +91,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           results: event.results,
           homeButtonActive: prevState.homeButtonActive,
           calcButtonActive: true,
+          currentId: prevState.currentId,
       );
       emit(newState);
     });
@@ -101,6 +106,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         results: prevState.results,
         homeButtonActive: event.active,
         calcButtonActive: prevState.calcButtonActive,
+        currentId: prevState.currentId,
       );
       emit(newState);
     });
@@ -115,6 +121,22 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         results: prevState.results,
         homeButtonActive: prevState.homeButtonActive,
         calcButtonActive: event.active,
+        currentId: prevState.currentId,
+      );
+      emit(newState);
+    });
+    on<SetCurrentSolutionIdEvent>((event, emit) {
+      final prevState = state as AppLoaded;
+      final newState = AppLoaded(
+        url: prevState.url,
+        totalTasks: prevState.totalTasks,
+        tasksDone: prevState.tasksDone,
+        tasks: prevState.tasks,
+        solutions: prevState.solutions,
+        results: prevState.results,
+        homeButtonActive: prevState.homeButtonActive,
+        calcButtonActive: prevState.calcButtonActive,
+        currentId: event.id,
       );
       emit(newState);
     });

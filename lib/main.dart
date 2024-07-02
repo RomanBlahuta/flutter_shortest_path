@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webspark_test_task/blocs/app_bloc/app_bloc.dart';
 import 'package:webspark_test_task/screens/calculation_screen.dart';
 import 'package:webspark_test_task/screens/home_screen.dart';
+import 'package:webspark_test_task/screens/solution_view_screen.dart';
 import 'package:webspark_test_task/screens/solutions_list_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
             '/': (context) => const HomeScreen(),
             'calculation': (context) => const CalculationScreen(),
             'solutions': (context) => const SolutionListScreen(),
-            'solution': (context) => const MyHomePage(title: 'Solution'),
+            'solution': (context) => const SolutionViewScreen(),
           },
         ),
     );
