@@ -13,7 +13,7 @@ final class AppInitial extends AppState {
   final int totalTasks = 0;
   final int tasksDone = 0;
   final TaskListModel tasks = TaskListModel();
-  final List<List<Cell>> solutions = [];
+  final Map<String, List<Cell>> solutions = {};
   final ResultsModel results = ResultsModel();
   final bool homeButtonActive = true;
   final bool calcButtonActive = true;
@@ -30,7 +30,7 @@ final class AppLoaded extends AppState {
   final int totalTasks;
   final int tasksDone;
   final TaskListModel tasks;
-  final List<List<Cell>> solutions;
+  final Map<String, List<Cell>> solutions;
   final ResultsModel results;
   final bool homeButtonActive;
   final bool calcButtonActive;

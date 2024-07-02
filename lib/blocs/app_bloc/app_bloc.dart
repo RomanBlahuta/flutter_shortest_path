@@ -59,7 +59,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         final graph = GridGraph();
         graph.formGraph(List<String>.from(task.field));
         final solution = findShortestPath(graph, Cell(task.start.x, task.start.y), Cell(task.end.x, task.end.y));
-        add(SolutionLoadedEvent(solution));
+        add(SolutionLoadedEvent(task.id, solution));
       }
     });
     on<SolutionLoadedEvent>((event, emit) {
@@ -69,7 +69,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           totalTasks: prevState.totalTasks,
           tasksDone: prevState.tasksDone + 1,
           tasks: prevState.tasks,
-          solutions: List.from(prevState.solutions)..add(event.solution),
+          solutions: Map<String, List<Cell>>.from(prevState.solutions)..[event.id] = event.solution,
           results: prevState.results,
           homeButtonActive: prevState.homeButtonActive,
           calcButtonActive: prevState.calcButtonActive,

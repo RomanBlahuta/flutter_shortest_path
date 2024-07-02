@@ -29,9 +29,10 @@ class TasksLoadedEvent extends AppEvent {
 
 
 class SolutionLoadedEvent extends AppEvent {
+  final String id;
   final List<Cell> solution;
 
-  const SolutionLoadedEvent(this.solution);
+  const SolutionLoadedEvent(this.id, this.solution);
 
   @override
   List<Object?> get props => [solution];

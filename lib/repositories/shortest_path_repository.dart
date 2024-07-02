@@ -23,9 +23,22 @@ class ShortestPathRepository {
   }
 
   Future<ResultsModel> postSolutions(String url, List<Map<String, dynamic>> answers) async {
-    final response = await dio.post(url, data: answers);
-    final result = ResultsModel();
-    result.fromJson(response);
+    late ResultsModel result;
+    print('\n\n\n');
+    print(answers);
+
+    try {
+      final response = await dio.post(url, data: answers);
+      print(response);
+      result = ResultsModel();
+      result.fromJson(response);
+    } catch (e) {
+      result = ResultsModel();
+      print('\n\n\nCAUGHT\n\n\n');
+      result.error = true;
+      result.message = 'Unknown Error: Could not send answers to the server';
+      result.data = [];
+    }
     return result;
   }
 }

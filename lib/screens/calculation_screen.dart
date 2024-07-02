@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/app_bloc/app_bloc.dart';
+import '../repositories/shortest_path_repository.dart';
+import '../utils/data_structures.dart';
 
 class CalculationScreen extends StatelessWidget {
   const CalculationScreen({super.key});
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(message),
+        action: SnackBarAction(label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +57,20 @@ class CalculationScreen extends StatelessWidget {
                             ),
                             backgroundColor: ((state as AppLoaded).calcButtonActive) ? Colors.lightBlueAccent : Colors.grey,
                           ),
-                          onPressed: (state.calcButtonActive) ? () => Navigator.pushNamed(context, 'solutions') : null,
+                          onPressed: (state.calcButtonActive) ? () async {
+                            context.read<AppBloc>().add(const ToggleCalcButtonEvent(false));
+                            final repository = ShortestPathRepository();
+                            final body = formResponseForPost(state.solutions);
+                            final response = await repository.postSolutions(state.url, body);
+                            if (response.error) {
+                              _showToast(context, response.message);
+                            }
+                            else {
+                              Navigator.pushNamed(context, 'solutions');
+                            }
+                            context.read<AppBloc>().add(const ToggleCalcButtonEvent(true));
+                            context.read<AppBloc>().add(ResultsLoadedEvent(response));
+                          } : null,
                           child: const Text(
                               style: TextStyle(
                                 color: Colors.black,
@@ -125,4 +151,27 @@ class CalculationScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Map<String, dynamic>> formResponseForPost(Map<String, List<Cell>> solutions) {
+  final List<Map<String, dynamic>> response = [];
+  for (final taskId in solutions.keys) {
+    String pathString = '';
+    solutions[taskId]?.forEach((solution) {
+      pathString += '(${solution.item1},${solution.item2})->';
+    });
+    pathString = pathString.substring(0, pathString.length-2);
+    print(pathString);
+
+    response.add({
+      'id': taskId,
+      'result': {
+        'steps': solutions[taskId]?.map((solution) => ({'x': solution.item1, 'y': solution.item2})).toList(),
+        'path': pathString,
+      },
+    });
+  }
+
+  print(response);
+  return response;
 }
