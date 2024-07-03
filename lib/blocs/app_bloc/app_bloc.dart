@@ -58,10 +58,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       );
       emit(newState);
 
+      final algorithm = Bfs();
+      final solver = ShortestPathSolver(algorithm);
+
       for (final task in event.tasks.data) {
         final graph = GridGraph();
         graph.formGraph(List<String>.from(task.field));
-        final solution = findShortestPath(graph, Cell(task.start.x, task.start.y), Cell(task.end.x, task.end.y));
+        final solution = solver.findShortestPath(graph, Cell(task.start.x, task.start.y), Cell(task.end.x, task.end.y));
         add(SolutionLoadedEvent(task.id, solution));
       }
     });
