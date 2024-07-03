@@ -48,6 +48,7 @@ class ResultsLoadedEvent extends AppEvent {
   List<Object?> get props => [results];
 }
 
+
 class ToggleHomeButtonEvent extends AppEvent {
   final bool active;
 
@@ -58,6 +59,7 @@ class ToggleHomeButtonEvent extends AppEvent {
 
 }
 
+
 class ToggleCalcButtonEvent extends AppEvent {
   final bool active;
 
@@ -67,6 +69,7 @@ class ToggleCalcButtonEvent extends AppEvent {
   List<Object?> get props => [active];
 
 }
+
 
 class SetCurrentSolutionIdEvent extends AppEvent {
   final String id;

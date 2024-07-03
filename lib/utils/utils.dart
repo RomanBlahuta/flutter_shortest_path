@@ -17,6 +17,7 @@ List<Map<String, dynamic>> formResponseForPost(Map<String, List<Cell>> solutions
   return response;
 }
 
+
 String formSolutionPathString(String id, Map<String, List<Cell>> solutions) {
   String pathString = '';
   solutions[id]?.forEach((solution) {

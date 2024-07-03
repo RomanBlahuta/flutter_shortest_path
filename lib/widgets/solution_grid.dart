@@ -59,6 +59,7 @@ List<Widget> getRows(BuildContext context, List<String> field, List<Cell> path, 
   return result;
 }
 
+
 Color getCellColor(List<String> field, List<Cell> path, int x, int y) {
   bool isInPath = false;
   path.forEach((cell) => (cell.item1 == x && cell.item2 == y) ? isInPath = true : null);

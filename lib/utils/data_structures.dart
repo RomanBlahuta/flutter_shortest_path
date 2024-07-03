@@ -1,8 +1,8 @@
 import 'package:webspark_test_task/utils/constants.dart';
 import 'package:tuple/tuple.dart';
 
-
 typedef Cell = Tuple2<int, int>;
+
 
 class GridGraph {
   final _graph = <Cell, List<Cell>>{};
@@ -63,7 +63,6 @@ class GridGraph {
   List<Cell> get cells => _cells;
   int get vertices => _vertices;
 }
-
 
 
 class Queue<T> {

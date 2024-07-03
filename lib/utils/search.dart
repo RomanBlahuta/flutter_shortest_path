@@ -19,7 +19,6 @@ void bfs(GridGraph graph, Cell source, Map<Cell, Cell?> parents, Map<Cell, int> 
 }
 
 
-
 List<Cell> findShortestPath(GridGraph graph, Cell source, Cell destination) {
   final shortestPath = <Cell>[];
   final parents = <Cell, Cell?>{};
