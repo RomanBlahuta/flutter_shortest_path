@@ -96,34 +96,68 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(newState);
     });
     on<ToggleHomeButtonEvent>((event, emit) {
-      final prevState = state as AppLoaded;
-      final newState = AppLoaded(
-        url: prevState.url,
-        totalTasks: prevState.totalTasks,
-        tasksDone: prevState.tasksDone,
-        tasks: prevState.tasks,
-        solutions: prevState.solutions,
-        results: prevState.results,
-        homeButtonActive: event.active,
-        calcButtonActive: prevState.calcButtonActive,
-        currentId: prevState.currentId,
-      );
-      emit(newState);
+      if (state is AppInitial) {
+        final prevState = state as AppInitial;
+        final newState = AppLoaded(
+          url: prevState.url,
+          totalTasks: prevState.totalTasks,
+          tasksDone: prevState.tasksDone,
+          tasks: prevState.tasks,
+          solutions: prevState.solutions,
+          results: prevState.results,
+          homeButtonActive: event.active,
+          calcButtonActive: prevState.calcButtonActive,
+          currentId: prevState.currentId,
+        );
+        emit(newState);
+      }
+      else {
+        final prevState = state as AppLoaded;
+        final newState = AppLoaded(
+          url: prevState.url,
+          totalTasks: prevState.totalTasks,
+          tasksDone: prevState.tasksDone,
+          tasks: prevState.tasks,
+          solutions: prevState.solutions,
+          results: prevState.results,
+          homeButtonActive: event.active,
+          calcButtonActive: prevState.calcButtonActive,
+          currentId: prevState.currentId,
+        );
+        emit(newState);
+      }
     });
     on<ToggleCalcButtonEvent>((event, emit) {
-      final prevState = state as AppLoaded;
-      final newState = AppLoaded(
-        url: prevState.url,
-        totalTasks: prevState.totalTasks,
-        tasksDone: prevState.tasksDone,
-        tasks: prevState.tasks,
-        solutions: prevState.solutions,
-        results: prevState.results,
-        homeButtonActive: prevState.homeButtonActive,
-        calcButtonActive: event.active,
-        currentId: prevState.currentId,
-      );
-      emit(newState);
+      if (state is AppInitial) {
+        final prevState = state as AppInitial;
+        final newState = AppLoaded(
+          url: prevState.url,
+          totalTasks: prevState.totalTasks,
+          tasksDone: prevState.tasksDone,
+          tasks: prevState.tasks,
+          solutions: prevState.solutions,
+          results: prevState.results,
+          homeButtonActive: prevState.homeButtonActive,
+          calcButtonActive: event.active,
+          currentId: prevState.currentId,
+        );
+        emit(newState);
+      }
+      else {
+        final prevState = state as AppLoaded;
+        final newState = AppLoaded(
+          url: prevState.url,
+          totalTasks: prevState.totalTasks,
+          tasksDone: prevState.tasksDone,
+          tasks: prevState.tasks,
+          solutions: prevState.solutions,
+          results: prevState.results,
+          homeButtonActive: prevState.homeButtonActive,
+          calcButtonActive: event.active,
+          currentId: prevState.currentId,
+        );
+        emit(newState);
+      }
     });
     on<SetCurrentSolutionIdEvent>((event, emit) {
       final prevState = state as AppLoaded;

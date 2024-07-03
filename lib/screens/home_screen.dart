@@ -63,11 +63,12 @@ class HomeScreen extends StatelessWidget {
                             final repository = ShortestPathRepository();
                             context.loaderOverlay.show();
                             final response = await repository.getTasks(state.url);
+                            context.loaderOverlay.hide();
+
                             if (response.error) {
                               _showToast(context, response.message);
                             }
                             else {
-                              context.loaderOverlay.hide();
                               Navigator.pushNamed(context, 'calculation');
                             }
                             context.read<AppBloc>().add(const ToggleHomeButtonEvent(true));
