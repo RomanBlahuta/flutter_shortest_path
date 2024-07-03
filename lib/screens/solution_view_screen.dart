@@ -23,25 +23,48 @@ class SolutionViewScreen extends StatelessWidget {
             'Preview screen'
         ),
       ),
-      body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SolutionGrid(field: [], xLen: 0, yLen: 0, path: []),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SolutionGrid(
+                field: extractField((state as AppLoaded)),
+                xLen: extractField(state).first.length,
+                yLen: extractField(state).length,
+                path: state.solutions[state.currentId]!,
               ),
-              formSolutionPathString((state as AppLoaded).currentId, state.solutions),
-            )
-          ],
-        );
-      }),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                formSolutionPathString(state.currentId, state.solutions),
+              )
+            ],
+          );
+        }),
+      )
     );
+  }
+}
+
+List<String> extractField(AppLoaded state) {
+  int index = -1;
+  for (final el in state.tasks.data) {
+    if (el.id == state.currentId) {
+      index = state.tasks.data.indexOf(el);
+    }
+  }
+  if (index >= 0) {
+    return List<String>.from(state.tasks.data[index].field);
+  }
+  else {
+    return [];
   }
 }

@@ -5,6 +5,7 @@ import 'package:webspark_test_task/screens/home_screen.dart';
 import 'package:webspark_test_task/screens/solution_view_screen.dart';
 import 'package:webspark_test_task/screens/solutions_list_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,47 +25,12 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           routes: {
-            '/': (context) => const HomeScreen(),
-            'calculation': (context) => const CalculationScreen(),
+            '/': (context) => const LoaderOverlay(child: HomeScreen()),
+            'calculation': (context) => const LoaderOverlay(child: CalculationScreen()),
             'solutions': (context) => const SolutionListScreen(),
             'solution': (context) => const SolutionViewScreen(),
           },
         ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times: Calculating...',
-            ),
-            Text(
-              '1',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/calculation'),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

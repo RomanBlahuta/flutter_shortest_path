@@ -9,12 +9,10 @@ class ShortestPathRepository {
     late TaskListModel result;
     try {
       final response = await dio.get(url);
-      print(response);
       result = TaskListModel();
       result.fromJson(response);
     } catch (e) {
       result = TaskListModel();
-      print('\n\n\nCAUGHT\n\n\n');
       result.error = true;
       result.message = 'Unknown Error: Most Likely an invalid URL was provided';
       result.data = [];
@@ -24,17 +22,13 @@ class ShortestPathRepository {
 
   Future<ResultsModel> postSolutions(String url, List<Map<String, dynamic>> answers) async {
     late ResultsModel result;
-    print('\n\n\n');
-    print(answers);
 
     try {
       final response = await dio.post(url, data: answers);
-      print(response);
       result = ResultsModel();
       result.fromJson(response);
     } catch (e) {
       result = ResultsModel();
-      print('\n\n\nCAUGHT\n\n\n');
       result.error = true;
       result.message = 'Unknown Error: Could not send answers to the server';
       result.data = [];

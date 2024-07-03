@@ -14,7 +14,6 @@ List<Map<String, dynamic>> formResponseForPost(Map<String, List<Cell>> solutions
     });
   }
 
-  print(response);
   return response;
 }
 
@@ -24,8 +23,6 @@ String formSolutionPathString(String id, Map<String, List<Cell>> solutions) {
     pathString += '(${solution.item1},${solution.item2})->';
   });
   pathString = pathString.substring(0, pathString.length-2);
-
-  print(pathString);
 
   return pathString;
 }

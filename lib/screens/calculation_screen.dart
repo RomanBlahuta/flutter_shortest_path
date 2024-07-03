@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../blocs/app_bloc/app_bloc.dart';
 import '../repositories/shortest_path_repository.dart';
-import '../utils/data_structures.dart';
 import '../utils/utils.dart';
 
 class CalculationScreen extends StatelessWidget {
@@ -34,11 +34,12 @@ class CalculationScreen extends StatelessWidget {
           ),
             'Process screen'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            Positioned.fill(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Stack(
+            children: [
+              Positioned.fill(
                 bottom: 16,
                 child: Align(
                   alignment: Alignment.bottomCenter,
@@ -61,8 +62,10 @@ class CalculationScreen extends StatelessWidget {
                           onPressed: (state.calcButtonActive) ? () async {
                             context.read<AppBloc>().add(const ToggleCalcButtonEvent(false));
                             final repository = ShortestPathRepository();
+                            context.loaderOverlay.show();
                             final body = formResponseForPost(state.solutions);
                             final response = await repository.postSolutions(state.url, body);
+                            context.loaderOverlay.hide();
                             if (response.error) {
                               _showToast(context, response.message);
                             }
@@ -87,48 +90,48 @@ class CalculationScreen extends StatelessWidget {
                     }),
                   ),
                 ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
-                    child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-                      if ((state as AppLoaded).totalTasks > state.tasksDone) {
-                        return const Text(
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                          'Calculating...',
-                        );
-                      }
-                      else {
-                        return const Text(
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                          'All calculations have finished, you can send your results to server',
-                        );
-                      }
-                    }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 64),
-                    child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-                      return Text(
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                          '${((state as AppLoaded).totalTasks == 0 || state.tasksDone == 0) ? 0 : ((state.tasksDone / state.totalTasks)*100).round()}%');
-                    }),
-                  ),
-                  Transform.scale(
-                    scale: 3,
-                    child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
+                      child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+                        if ((state as AppLoaded).totalTasks > state.tasksDone) {
+                          return const Text(
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                            'Calculating...',
+                          );
+                        }
+                        else {
+                          return const Text(
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                            'All calculations have finished, you can send your results to server',
+                          );
+                        }
+                      }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 64),
+                      child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+                        return Text(
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                            '${((state as AppLoaded).totalTasks == 0 || state.tasksDone == 0) ? 0 : ((state.tasksDone / state.totalTasks)*100).round()}%');
+                      }),
+                    ),
+                    Transform.scale(
+                      scale: 3,
+                      child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
                         return Center(
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
@@ -138,18 +141,19 @@ class CalculationScreen extends StatelessWidget {
                           ),
                         );
                       },
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 100,
-                    width: 100,
-                  )
-                ],
+                    const SizedBox(
+                      height: 100,
+                      width: 100,
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }

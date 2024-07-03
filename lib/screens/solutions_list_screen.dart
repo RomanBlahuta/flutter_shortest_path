@@ -21,41 +21,43 @@ class SolutionListScreen extends StatelessWidget {
             ),
             'Result list screen'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-          return ListView(
-            children: (state as AppLoaded).solutions.keys.map((id) => GestureDetector(
-              onTap: () {
-                context.read<AppBloc>().add(SetCurrentSolutionIdEvent(id));
-                Navigator.pushNamed(context, 'solution');
-              } ,
-              child: Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.black12,
-                        )
-                    )
-                ),
-                height: 72,
-                width: double.infinity,
-                child: Center(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+            return ListView(
+              children: (state as AppLoaded).solutions.keys.map((id) => GestureDetector(
+                onTap: () {
+                  context.read<AppBloc>().add(SetCurrentSolutionIdEvent(id));
+                  Navigator.pushNamed(context, 'solution');
+                } ,
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                            width: 2,
+                            color: Colors.black12,
+                          )
+                      )
+                  ),
+                  height: 72,
+                  width: double.infinity,
+                  child: Center(
                     child: Text(
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        formSolutionPathString(id, state.solutions),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      formSolutionPathString(id, state.solutions),
                     ),
+                  ),
                 ),
-              ),
-            )).toList(),
-          );
-        }),
-      ),
+              )).toList(),
+            );
+          }),
+        ),
+      )
     );
   }
 }
